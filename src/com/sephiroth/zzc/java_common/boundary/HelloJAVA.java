@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,7 +44,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20141231171345();
+		function20151027153226();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -68,6 +69,26 @@ public class HelloJAVA {
 
 	// 测试命令行接口
 	public static void function(String... args) {
+	}
+	
+	//2015-10-27 15:32:07 批量重命名文件
+	public static void function20151027153226(String... args) {
+		DecimalFormat df1 = new DecimalFormat("00");
+		String path = "F:\\tmp\\img\\";
+		String path_des = "F:\\tmp\\img_rename\\";
+		
+		File p = new File(path);
+		File fs[]=p.listFiles();
+		for(File f:fs){
+			String s_ori = f.getName();
+			Util.pl(s_ori);
+//			short index = Short.parseShort(s_ori.substring(5, 7));
+			short index = Short.parseShort(s_ori.substring(4, 6));
+			Util.pl(index);
+			String s_des = "img_p"+df1.format(index+55)+".jpg";
+//			File des_file = new File(path_des+s_des);
+			FileManager.copyFile(f.getPath(), path_des+s_des, true);
+		}
 	}
 	
 	//2014-12-31 17:13:19 测试Zip模块
