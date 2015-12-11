@@ -44,7 +44,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20151027153226();
+		function20151211163909();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -70,6 +70,18 @@ public class HelloJAVA {
 	// 测试命令行接口
 	public static void function(String... args) {
 	}
+	
+	//2015-12-11 16:38:48 逐星的期望计算
+	public static void function20151211163909(String... args) {
+		ArrayList<Float> rate_find_map =  new ArrayList<Float>();
+		int temp_add = 0;
+		for(int i=1;i<=24;i++){
+			temp_add+=i;
+		}
+		float exp_find_map = temp_add/24;
+		Util.pl(exp_find_map);
+	}
+	
 	
 	//2015-10-27 15:32:07 批量重命名文件
 	public static void function20151027153226(String... args) {
