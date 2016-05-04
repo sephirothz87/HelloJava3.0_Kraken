@@ -35,7 +35,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class HelloJAVA {
 
-	private static String mTestPath = Util.JAVA_COMMON_PATH+Util.FILE_SEPAERATOR;
+	private static String mTestPath = Util.JAVA_COMMON_PATH
+			+ Util.FILE_SEPAERATOR;
 
 	public static void main(String... args) throws IOException {
 		Util.pl("Component Version : " + Util.COMMON_VERSION_CODE + "  "
@@ -44,7 +45,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20151211163909();
+		function2015123080428();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -64,55 +65,165 @@ public class HelloJAVA {
 			Util.pl(s);
 		}
 	}
-	
+
 	// 封装jar包的入口
 
 	// 测试命令行接口
 	public static void function(String... args) {
 	}
-	
-	//2015-12-11 16:38:48 逐星的期望计算
-	public static void function20151211163909(String... args) {
-		ArrayList<Float> rate_find_map =  new ArrayList<Float>();
-		int temp_add = 0;
-		for(int i=1;i<=24;i++){
-			temp_add+=i;
+
+	// 2015-12-30 8:04:08 ==和equal的验证
+	public static void function2015123080428(String... args) {
+		String a = "123";
+		String b = a;
+		String c = "123";
+		String d = new String("123");
+
+		if (a == b) {
+			Util.pl("a==b");
+		} else {
+			Util.pl("a!=b");
 		}
-		float exp_find_map = temp_add/24;
+
+		if (a.equals(b)) {
+			Util.pl("a.equals(b)");
+		} else {
+			Util.pl("!a.equals(b)");
+		}
+
+		if (a == c) {
+			Util.pl("a==c");
+		} else {
+			Util.pl("a!=c");
+		}
+
+		if (a.equals(c)) {
+			Util.pl("a.equals(c)");
+		} else {
+			Util.pl("!a.equals(c)");
+		}
+
+		if (a == d) {
+			Util.pl("a==d");
+		} else {
+			Util.pl("a!=d");
+		}
+
+		if (a.equals(d)) {
+			Util.pl("a.equals(d)");
+		} else {
+			Util.pl("!a.equals(d)");
+		}
+
+		class C {
+			int aa;
+			int bb;
+			String ss;
+
+			C(int a, int b, String s) {
+				aa = a;
+				bb = b;
+				ss = s;
+			}
+		}
+
+		C c_a = new C(1, 2, "cc");
+		C c_b = c_a;
+		C c_c = new C(1, 2, "cc");
+
+		if (c_a == c_b) {
+			Util.pl("c_a==c_b");
+		} else {
+			Util.pl("c_a!=c_b");
+		}
+
+		if (c_a.equals(c_b)) {
+			Util.pl("c_a.equals(c_b)");
+		} else {
+			Util.pl("!c_a.equals(c_b)");
+		}
+
+		if (c_a == c_c) {
+			Util.pl("c_a==c_c");
+		} else {
+			Util.pl("c_a!=c_c");
+		}
+
+		if (c_a.equals(c_c)) {
+			Util.pl("c_a.equals(c_c)");
+		} else {
+			Util.pl("!c_a.equals(c_c)");
+		}
+
+		String weekend = "weekend";
+
+		if (weekend == "weekend") {
+			Util.pl("weekend == weekend");
+		} else {
+			Util.pl("weekend != weekend");
+		}
+
+		if (weekend.equals("weekend")) {
+			Util.pl("weekend  .equals weekend");
+		} else {
+			Util.pl("weekend  !.equals weekend");
+		}
+
+		if (weekend == new String("weekend")) {
+			Util.pl("weekend == new String weekend");
+		} else {
+			Util.pl("weekend != new String weekend");
+		}
+
+		if (weekend.equals(new String("weekend"))) {
+			Util.pl("weekend  .equals new String weekend");
+		} else {
+			Util.pl("weekend  !.equals new String weekend");
+		}
+	}
+
+	// 2015-12-11 16:38:48 逐星的期望计算
+	public static void function20151211163909(String... args) {
+		ArrayList<Float> rate_find_map = new ArrayList<Float>();
+		int temp_add = 0;
+		for (int i = 1; i <= 24; i++) {
+			temp_add += i;
+		}
+		float exp_find_map = temp_add / 24;
 		Util.pl(exp_find_map);
 	}
-	
-	
-	//2015-10-27 15:32:07 批量重命名文件
+
+	// 2015-10-27 15:32:07 批量重命名文件
 	public static void function20151027153226(String... args) {
 		DecimalFormat df1 = new DecimalFormat("00");
 		String path = "F:\\tmp\\img\\";
 		String path_des = "F:\\tmp\\img_rename\\";
-		
+
 		File p = new File(path);
-		File fs[]=p.listFiles();
-		for(File f:fs){
+		File fs[] = p.listFiles();
+		for (File f : fs) {
 			String s_ori = f.getName();
 			Util.pl(s_ori);
-//			short index = Short.parseShort(s_ori.substring(5, 7));
+			// short index = Short.parseShort(s_ori.substring(5, 7));
 			short index = Short.parseShort(s_ori.substring(4, 6));
 			Util.pl(index);
-			String s_des = "img_p"+df1.format(index+55)+".jpg";
-//			File des_file = new File(path_des+s_des);
-			FileManager.copyFile(f.getPath(), path_des+s_des, true);
+			String s_des = "img_p" + df1.format(index + 55) + ".jpg";
+			// File des_file = new File(path_des+s_des);
+			FileManager.copyFile(f.getPath(), path_des + s_des, true);
 		}
 	}
-	
-	//2014-12-31 17:13:19 测试Zip模块
+
+	// 2014-12-31 17:13:19 测试Zip模块
 	public static void function20141231171345(String... args) {
 		Util.pl(mTestPath);
-		
-//		Zipper.compress(mTestPath+"RoboTest.xml");
-		Zipper.compress(mTestPath+"RoboTest.xml",mTestPath+"1.zip");
+
+		// Zipper.compress(mTestPath+"RoboTest.xml");
+		Zipper.compress(mTestPath + "RoboTest.xml", mTestPath + "1.zip");
 	}
-	//2014-12-31 17:13:19 测试Zip模块
-	
-	//2014-12-28 17:23:13  测试XMLUtil，写修改属性
+
+	// 2014-12-31 17:13:19 测试Zip模块
+
+	// 2014-12-28 17:23:13 测试XMLUtil，写修改属性
 	public static final String NODE_NAME_TEST_CASE = "TestCase";
 
 	public static final String NODE_ATTRIBUTE_ID = "id";
@@ -123,93 +234,94 @@ public class HelloJAVA {
 	public static final String NODE_ATTRIBUTE_IS_ABLE = "is_able";
 	public static final String NODE_ATTRIBUTE_IS_OPEN = "id_open";
 
-	
 	public static void function20141228172349(String... args) {
 		Util.pl(mTestPath);
-		
-		XMLUtil.init(mTestPath+"RoboTest.xml");
-		
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, 1));
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_ID,"3"));
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_DES_DTL,"详细",4));
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_IS_ABLE,"false"));
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM,4));
-		Util.pl(XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_IS_ABLE,"true",4));
-		
-		String s=XMLUtil.getNodeAttribute(
-				NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_ID,"2");
-		s=s+TimeManager.getTime();
+
+		XMLUtil.init(mTestPath + "RoboTest.xml");
+
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, 1));
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_ID, "3"));
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_DES_DTL, "详细", 4));
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_IS_ABLE, "false"));
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, 4));
+		Util.pl(XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_IS_ABLE, "true", 4));
+
+		String s = XMLUtil.getNodeAttribute(NODE_NAME_TEST_CASE,
+				NODE_ATTRIBUTE_DES_SIM, NODE_ATTRIBUTE_ID, "2");
+		s = s + TimeManager.getTime();
 		Util.pl(s);
-		XMLUtil.setNodeAttribute(NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM, s, NODE_ATTRIBUTE_ID, "2");
+		XMLUtil.setNodeAttribute(NODE_NAME_TEST_CASE, NODE_ATTRIBUTE_DES_SIM,
+				s, NODE_ATTRIBUTE_ID, "2");
 	}
-	//2014-12-28 17:23:13  测试XMLUtil，写修改属性
-	
-	//2014-12-10 22:30:02  测试java property
+
+	// 2014-12-28 17:23:13 测试XMLUtil，写修改属性
+
+	// 2014-12-10 22:30:02 测试java property
 	public static void function20141210222850(String... args) {
-		//Util.pl(mTestPath);
-		String test_path="E:\\92_TESTPATH\\";
-		String propeties_file_name="property.properties";
-		String propeties_file_path=test_path+propeties_file_name;
-		
-		ZProperties pps=new ZProperties();
-		
-			try {
-				InputStream ins=new BufferedInputStream(new FileInputStream(propeties_file_path));
-				pps.load(ins);
-				
-				String p1=pps.getProperty("p1");
-				String p2=pps.getProperty("p2");
-				String p3=pps.getProperty("p3");
-				String p4=pps.getProperty("p4");
-				
-				Util.pl("p1 = "+p1);
-				Util.pl("p2 = "+p2);
-				Util.pl("p3 = "+p3);
-				Util.pl("p4 = "+p4);
-				
-				ArrayList<String> p5=pps.getArrayProperties("p5");
-				Util.pl("p5:");
-				Util.psl(p5);
-				
-				String[] p6=pps.getProperties("p6");
-				Util.pl("p6:");
-				Util.psl(p6);
-				
-				int p7=pps.getIntProperty("p7");
-				Util.pl(p7);
-				
-				int[] p8= pps.getIntProperties("p8");
-				Util.psl(p8);
-				
-				float p9=pps.getIntProperty("p9");
-				Util.pl(p9);
-				
-				float[] p10= pps.getFloatProperties("p10");
-				Util.psl(p10);
-				
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
-		
-//		String s= "123456a";
-//		
-//		try{
-//
-//			int i=Integer.parseInt(s);
-//			Util.pl(""+i);
-//		}catch(NumberFormatException e){
-//			Util.pl("NumberFormatException");
-//			e.printStackTrace();
-//		}
+		// Util.pl(mTestPath);
+		String test_path = "E:\\92_TESTPATH\\";
+		String propeties_file_name = "property.properties";
+		String propeties_file_path = test_path + propeties_file_name;
+
+		ZProperties pps = new ZProperties();
+
+		try {
+			InputStream ins = new BufferedInputStream(new FileInputStream(
+					propeties_file_path));
+			pps.load(ins);
+
+			String p1 = pps.getProperty("p1");
+			String p2 = pps.getProperty("p2");
+			String p3 = pps.getProperty("p3");
+			String p4 = pps.getProperty("p4");
+
+			Util.pl("p1 = " + p1);
+			Util.pl("p2 = " + p2);
+			Util.pl("p3 = " + p3);
+			Util.pl("p4 = " + p4);
+
+			ArrayList<String> p5 = pps.getArrayProperties("p5");
+			Util.pl("p5:");
+			Util.psl(p5);
+
+			String[] p6 = pps.getProperties("p6");
+			Util.pl("p6:");
+			Util.psl(p6);
+
+			int p7 = pps.getIntProperty("p7");
+			Util.pl(p7);
+
+			int[] p8 = pps.getIntProperties("p8");
+			Util.psl(p8);
+
+			float p9 = pps.getIntProperty("p9");
+			Util.pl(p9);
+
+			float[] p10 = pps.getFloatProperties("p10");
+			Util.psl(p10);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// String s= "123456a";
+		//
+		// try{
+		//
+		// int i=Integer.parseInt(s);
+		// Util.pl(""+i);
+		// }catch(NumberFormatException e){
+		// Util.pl("NumberFormatException");
+		// e.printStackTrace();
+		// }
 
 	}
 
@@ -224,10 +336,10 @@ public class HelloJAVA {
 		Util.pl("总数为：" + al.M);
 		for (int x = 1; x <= 50; x++) {
 			for (int y = 1; y <= x && y <= al.M; y++) {
-				if(y==9){
-					Util.pl("第 " + x + " 位出现 " + y + " 个数的概率是：" + al.al(x, y));	
+				if (y == 9) {
+					Util.pl("第 " + x + " 位出现 " + y + " 个数的概率是：" + al.al(x, y));
 				}
-//				Util.pl("第 " + x + " 位出现 " + y + " 个数的概率是：" + al.al(x, y));
+				// Util.pl("第 " + x + " 位出现 " + y + " 个数的概率是：" + al.al(x, y));
 			}
 		}
 	}
@@ -504,7 +616,7 @@ public class HelloJAVA {
 	// 2014-02-11 15:55:18 test�??mac读�?????�??
 	public static void function20140211155518() {
 		try {
-//			FileCreater.CreateSpeFileByMB(1024, testPath + "testfile");
+			// FileCreater.CreateSpeFileByMB(1024, testPath + "testfile");
 			FileCreater.CreateSpeFileByKB(1, mTestPath + "testfile");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
