@@ -11,6 +11,8 @@ import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.awt.*;
+import java.awt.event.*;
 
 import com.sephiroth.zzc.java_common.control.FileManager;
 import com.sephiroth.zzc.java_common.control.MD5Manager;
@@ -45,7 +47,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function2015123080428();
+		function20160722113357();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -70,6 +72,176 @@ public class HelloJAVA {
 
 	// 测试命令行接口
 	public static void function(String... args) {
+	}
+	
+	// 克苏恩杀怪测试
+	static class BattleField{
+		//地方角色血量
+		int playerHealth = 30;
+		//敌方随从
+		ArrayList<Integer> minons;
+		
+		BattleField(int playerHealth,ArrayList<Integer> minons){
+			this.playerHealth = playerHealth;
+			this.minons = minons;
+		}
+	} 
+	
+	public static void function20160722113357(String... args) {
+		//敌方随从
+		ArrayList<Integer> minons = new ArrayList<Integer>();
+		//假设是吉祥三宝
+		minons.add(2);
+		minons.add(4);
+//		minons.add(4);
+		
+		//敌方角色血量
+		int player_health = 30;
+		
+//		BattleField b_a = new BattleField(player_health,minons);
+		
+//		if(equalBattleField(b_a,b_b)){
+//			Util.pl("true");
+//		}else{
+//			Util.pl("false");
+//		}
+		
+		//克苏恩的攻击力（攻击次数）
+		int cthun_attack = 12;
+		
+//		for(int i=0;i<cthun_attack;i++){
+//			
+//		}
+
+		baseBattle = new BattleField(player_health,minons);
+		curBattle = new BattleField(player_health,minons);
+		
+		attack(curBattle,cthun_attack);
+		
+//		Util.pla(ret);
+//		PrintBattle(retBf);
+	}
+	
+//	private static void attack(BattleField bf){
+//		
+//	}
+
+	static BattleField baseBattle;
+	static BattleField curBattle;
+	static ArrayList<String> ret= new ArrayList<String>();
+	static ArrayList<BattleField> retBf= new ArrayList<BattleField>();
+	static String root = "";
+	
+	public static void attack(BattleField bf,int max_attack){
+		PrintBattle(curBattle);
+		BattleField tmp_battle;
+		if(root.length()<max_attack){
+			//攻击角色
+			root+="0";
+			curBattle.playerHealth-=1;
+			
+			tmp_battle = new BattleField(curBattle.playerHealth,curBattle.minons); 
+			attack(curBattle,max_attack);
+			curBattle = new BattleField(tmp_battle.playerHealth,tmp_battle.minons);
+			
+			for(int i=0;i<curBattle.minons.size();i++){
+				int minon_health = curBattle.minons.get(i);
+				if(minon_health>0){
+					root=root+(i+1);
+					curBattle.minons.set(i,minon_health-1);
+
+					tmp_battle = new BattleField(curBattle.playerHealth,curBattle.minons); 
+					attack(curBattle,max_attack);
+					curBattle = new BattleField(tmp_battle.playerHealth,tmp_battle.minons);
+				}
+			}
+		}else{
+			ret.add(root);
+			retBf.add(curBattle);
+			
+			Util.pl(root);
+			PrintBattle(curBattle);
+			
+			root = "";
+//			tmp_battle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
+			curBattle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
+		}
+	}
+	
+	private static void PrintBattleArray(ArrayList<BattleField> retBf){
+		String ret = "B :";
+		for(BattleField bf:retBf){
+			ret+=" "+bf.playerHealth;
+			for(Integer i:bf.minons){
+				ret+=" "+i;
+			}
+		}
+		Util.pl(ret);
+	}
+	
+	private static void PrintBattle(BattleField bf){
+		String ret = "B :";
+			ret+=" "+bf.playerHealth;
+			for(Integer i:bf.minons){
+				ret+=" "+i;
+			}
+		Util.pl(ret);
+	}
+	
+	private static boolean equalBattleField(BattleField a,BattleField b){
+		if(a.playerHealth!=b.playerHealth){
+			return false;
+		}
+		
+		if(a.minons.size()!=b.minons.size()){
+			return false;
+		}
+		
+		for(int i=0;i<a.minons.size();i++){
+			if(a.minons.get(i)!=b.minons.get(i)){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	//awt鼠标点击测试
+	public static void function20160504171725(String... args) {
+		try {
+			final Robot rb = new Robot();
+			new Thread() {
+				public void run() {
+					Util.pl("run");
+					for(int i=0;i<10;i++){
+						rb.delay(2000);
+						// 回车
+//						rb.keyPress(KeyEvent.VK_ENTER);
+//						rb.keyRelease(KeyEvent.VK_ENTER);
+						
+						int x1 = (int) (Math.random()*500);
+						int y1 = (int) (Math.random()*500);
+						int x2 = (int) (Math.random()*500);
+						int y2 = (int) (Math.random()*500);
+						rb.mouseMove(x1,y1);
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+						rb.mouseMove(x2,y2);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+					}
+					Util.pl("over");
+				}
+			}.start();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void pressMouse(Robot r, int m, int delay) {
+		r.mousePress(m);
+		r.delay(10);
+		r.mouseRelease(m);
+		r.delay(delay);
 	}
 
 	// 2015-12-30 8:04:08 ==和equal的验证
