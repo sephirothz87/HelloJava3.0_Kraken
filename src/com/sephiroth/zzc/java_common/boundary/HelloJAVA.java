@@ -78,240 +78,249 @@ public class HelloJAVA {
 	// 测试命令行接口
 	public static void function(String... args) {
 	}
-	
+
 	// 克苏恩杀怪测试
-	static class BattleField{
-		//地方角色血量
+	static class BattleField {
+		// 地方角色血量
 		int playerHealth = 30;
-		//敌方随从
+		// 敌方随从
 		ArrayList<Integer> minons;
-		
-		BattleField(int playerHealth,ArrayList<Integer> minons){
+
+		BattleField(int playerHealth, ArrayList<Integer> minons) {
 			this.playerHealth = playerHealth;
 			this.minons = minons;
 		}
-		
-		public String toString(){
-			String ret = ""+this.playerHealth;
-			for(Integer i:this.minons){
-				ret+=" "+i;
+
+		public String toString() {
+			String ret = "" + this.playerHealth;
+			for (Integer i : this.minons) {
+				ret += " " + i;
 			}
 			return ret;
 		}
-	} 
-	
-	static class CthunReport{
+	}
+
+	static class CthunReport {
 		int statusCount;
 		double statusRate;
+
 		public CthunReport(int statusCount, double statusRate) {
 			super();
 			this.statusCount = statusCount;
 			this.statusRate = statusRate;
 		}
-		
-		public String toString(){
-			return ""+this.statusCount+"\t\t"+Util.DECIMAL_FORMAT_PERCENT.format(statusRate*100)+"%";
+
+		public String toString() {
+			return "" + this.statusCount + "\t\t"
+					+ Util.DECIMAL_FORMAT_PERCENT.format(statusRate * 100)
+					+ "%";
 		}
 	}
-	
+
 	public static void function20160815114540(String... args) {
 		MatchManager m = new MatchManager();
-		for(int i=0;i<100;i++){
+		for (int i = 0; i < 100; i++) {
 			Match match = m.genMatch();
 			Util.pl(m.genMatchResult(match).toString());
 			Util.pl(Util.JAVA_COMMON_LOG_PATH);
-//			File log = new File(Util.JAVA_COMMON_LOG_PATH);
+			// File log = new File(Util.JAVA_COMMON_LOG_PATH);
 			FileManager.writeLine(Util.JAVA_COMMON_LOG_PATH, match.toCsv());
 		}
 	}
-	
-	public static void function20160722113357(String... args) {
-		//敌方随从
-		ArrayList<Integer> minons = new ArrayList<Integer>();
-		//假设是吉祥三宝
-		minons.add(2);
-//		minons.add(2);
-		minons.add(4);
-		minons.add(4);
-		
-		//敌方角色血量
-		int player_health = 30;
-		
-//		BattleField b_a = new BattleField(player_health,minons);
-		
-//		if(equalBattleField(b_a,b_b)){
-//			Util.pl("true");
-//		}else{
-//			Util.pl("false");
-//		}
-		
-		//克苏恩的攻击力（攻击次数）
-//		int cthun_attack = 3;
-		int cthun_attack = 12;
-		
-//		for(int i=0;i<cthun_attack;i++){
-//			
-//		}
 
-		baseBattle = new BattleField(player_health,minons);
-		curBattle = new BattleField(player_health,minons);
-		
-		BattleField bf = new BattleField(player_health,minons);
-		
-		attack(bf,"",1.0,cthun_attack);
-		
+	public static void function20160722113357(String... args) {
+		// 敌方随从
+		ArrayList<Integer> minons = new ArrayList<Integer>();
+		// 假设是吉祥三宝
+		minons.add(2);
+		// minons.add(2);
+		minons.add(4);
+		minons.add(4);
+
+		// 敌方角色血量
+		int player_health = 30;
+
+		// BattleField b_a = new BattleField(player_health,minons);
+
+		// if(equalBattleField(b_a,b_b)){
+		// Util.pl("true");
+		// }else{
+		// Util.pl("false");
+		// }
+
+		// 克苏恩的攻击力（攻击次数）
+		// int cthun_attack = 3;
+		int cthun_attack = 12;
+
+		// for(int i=0;i<cthun_attack;i++){
+		//
+		// }
+
+		baseBattle = new BattleField(player_health, minons);
+		curBattle = new BattleField(player_health, minons);
+
+		BattleField bf = new BattleField(player_health, minons);
+
+		attack(bf, "", 1.0, cthun_attack);
+
 		Util.pl(counter);
-		
+
 		Iterator iter = retMap.entrySet().iterator();
-		
-		while(iter.hasNext()){
-			Map.Entry entry = (Map.Entry)iter.next();
-			
-//			Util.pl("["+entry.getKey()+"]:"+"\t"+Util.DECIMAL_FORMAT_PERCENT.format((double)(Integer)entry.getValue()/counter*100)+"%\t"+entry.getValue());
-			Util.pl("["+entry.getKey()+"]:"+((CthunReport)entry.getValue()).toString());
+
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+
+			// Util.pl("["+entry.getKey()+"]:"+"\t"+Util.DECIMAL_FORMAT_PERCENT.format((double)(Integer)entry.getValue()/counter*100)+"%\t"+entry.getValue());
+			Util.pl("[" + entry.getKey() + "]:"
+					+ ((CthunReport) entry.getValue()).toString());
 		}
-		
-//		Util.pla(ret);
-//		PrintBattle(retBf);
+
+		// Util.pla(ret);
+		// PrintBattle(retBf);
 	}
-	
-//	private static void attack(BattleField bf){
-//		
-//	}
+
+	// private static void attack(BattleField bf){
+	//
+	// }
 
 	static BattleField baseBattle;
 	static BattleField curBattle;
-	static int counter=0;
-	static ArrayList<String> ret= new ArrayList<String>();
-	static ArrayList<BattleField> retBf= new ArrayList<BattleField>();
+	static int counter = 0;
+	static ArrayList<String> ret = new ArrayList<String>();
+	static ArrayList<BattleField> retBf = new ArrayList<BattleField>();
 	static String root = "";
-	static HashMap<String,CthunReport> retMap = new HashMap<String,CthunReport>();
-	
-	public static void attack(BattleField bf,String rt,double rate,int max_attack){
-//		PrintBattle(bf);
-//		BattleField bs_battle = new BattleField(bf.playerHealth,bf.minons);
+	static HashMap<String, CthunReport> retMap = new HashMap<String, CthunReport>();
+
+	public static void attack(BattleField bf, String rt, double rate,
+			int max_attack) {
+		// PrintBattle(bf);
+		// BattleField bs_battle = new BattleField(bf.playerHealth,bf.minons);
 		ArrayList<Integer> nx_minons = new ArrayList<Integer>();
-//		nx_minons = (ArrayList<Integer>) bf.minons.clone();
-		BattleField nx_battle = new BattleField(bf.playerHealth,(ArrayList<Integer>) bf.minons.clone());
+		// nx_minons = (ArrayList<Integer>) bf.minons.clone();
+		BattleField nx_battle = new BattleField(bf.playerHealth,
+				(ArrayList<Integer>) bf.minons.clone());
 		String nx_rt = new String("");
 		double nx_rate = rate;
-		
+
 		int minons_alive_count = 0;
-		for(int i=0;i<bf.minons.size();i++){
-			if(bf.minons.get(i)>0){
+		for (int i = 0; i < bf.minons.size(); i++) {
+			if (bf.minons.get(i) > 0) {
 				minons_alive_count++;
 			}
 		}
-		
-		double base_rate = 1.0/(minons_alive_count+1);
-		
-		if(rt.length()<max_attack){
-			//攻击角色
-			nx_rt=rt+"0";
-			nx_battle.playerHealth-=1;
+
+		double base_rate = 1.0 / (minons_alive_count + 1);
+
+		if (rt.length() < max_attack) {
+			// 攻击角色
+			nx_rt = rt + "0";
+			nx_battle.playerHealth -= 1;
 			nx_rate *= base_rate;
-			
-			attack(nx_battle,nx_rt,nx_rate,max_attack);
-			
-			//攻击随从
-			for(int i=0;i<bf.minons.size();i++){
+
+			attack(nx_battle, nx_rt, nx_rate, max_attack);
+
+			// 攻击随从
+			for (int i = 0; i < bf.minons.size(); i++) {
 				int minon_health = bf.minons.get(i);
-				if(minon_health>0){
-					nx_battle = new BattleField(bf.playerHealth,(ArrayList<Integer>) bf.minons.clone());
+				if (minon_health > 0) {
+					nx_battle = new BattleField(bf.playerHealth,
+							(ArrayList<Integer>) bf.minons.clone());
 					nx_rt = new String("");
 					nx_rate = rate;
-					
-					nx_rt=rt+(i+1);
-					nx_battle.minons.set(i,minon_health-1);
+
+					nx_rt = rt + (i + 1);
+					nx_battle.minons.set(i, minon_health - 1);
 					nx_rate *= base_rate;
 
-					attack(nx_battle,nx_rt,nx_rate,max_attack);
+					attack(nx_battle, nx_rt, nx_rate, max_attack);
 				}
 			}
-		}else{
+		} else {
 			ret.add(rt);
 			retBf.add(bf);
-			
+
 			counter++;
-			
+
 			String bf_status = bf.toString();
-			if(retMap.containsKey(bf_status)){
-//				CthunReport cr = retMap.get(bf_status);
-				retMap.get(bf_status).statusCount+=1;
-				retMap.get(bf_status).statusRate+=rate;
-			}else{
-				retMap.put(bf_status, new CthunReport(1,rate));
+			if (retMap.containsKey(bf_status)) {
+				// CthunReport cr = retMap.get(bf_status);
+				retMap.get(bf_status).statusCount += 1;
+				retMap.get(bf_status).statusRate += rate;
+			} else {
+				retMap.put(bf_status, new CthunReport(1, rate));
 			}
-			
+
 			Util.pl(rt);
 			PrintBattle(bf);
-			
-//			root = "";
-////			tmp_battle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
-//			curBattle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
-			
+
+			// root = "";
+			// // tmp_battle = new
+			// BattleField(baseBattle.playerHealth,baseBattle.minons);
+			// curBattle = new
+			// BattleField(baseBattle.playerHealth,baseBattle.minons);
+
 			return;
 		}
 	}
-	
-	private static void PrintBattleArray(ArrayList<BattleField> retBf){
+
+	private static void PrintBattleArray(ArrayList<BattleField> retBf) {
 		String ret = "B :";
-		for(BattleField bf:retBf){
-			ret+=" "+bf.playerHealth;
-			for(Integer i:bf.minons){
-				ret+=" "+i;
+		for (BattleField bf : retBf) {
+			ret += " " + bf.playerHealth;
+			for (Integer i : bf.minons) {
+				ret += " " + i;
 			}
 		}
 		Util.pl(ret);
 	}
-	
-	private static void PrintBattle(BattleField bf){
+
+	private static void PrintBattle(BattleField bf) {
 		String ret = "B :";
-			ret+=" "+bf.playerHealth;
-			for(Integer i:bf.minons){
-				ret+=" "+i;
-			}
+		ret += " " + bf.playerHealth;
+		for (Integer i : bf.minons) {
+			ret += " " + i;
+		}
 		Util.pl(ret);
 	}
-	
-	private static boolean equalBattleField(BattleField a,BattleField b){
-		if(a.playerHealth!=b.playerHealth){
+
+	private static boolean equalBattleField(BattleField a, BattleField b) {
+		if (a.playerHealth != b.playerHealth) {
 			return false;
 		}
-		
-		if(a.minons.size()!=b.minons.size()){
+
+		if (a.minons.size() != b.minons.size()) {
 			return false;
 		}
-		
-		for(int i=0;i<a.minons.size();i++){
-			if(a.minons.get(i)!=b.minons.get(i)){
+
+		for (int i = 0; i < a.minons.size(); i++) {
+			if (a.minons.get(i) != b.minons.get(i)) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
-	//awt鼠标点击测试
+
+	// awt鼠标点击测试
 	public static void function20160504171725(String... args) {
 		try {
 			final Robot rb = new Robot();
 			new Thread() {
 				public void run() {
 					Util.pl("run");
-					for(int i=0;i<10;i++){
+					for (int i = 0; i < 10; i++) {
 						rb.delay(2000);
 						// 回车
-//						rb.keyPress(KeyEvent.VK_ENTER);
-//						rb.keyRelease(KeyEvent.VK_ENTER);
-						
-						int x1 = (int) (Math.random()*500);
-						int y1 = (int) (Math.random()*500);
-						int x2 = (int) (Math.random()*500);
-						int y2 = (int) (Math.random()*500);
-						rb.mouseMove(x1,y1);
+						// rb.keyPress(KeyEvent.VK_ENTER);
+						// rb.keyRelease(KeyEvent.VK_ENTER);
+
+						int x1 = (int) (Math.random() * 500);
+						int y1 = (int) (Math.random() * 500);
+						int x2 = (int) (Math.random() * 500);
+						int y2 = (int) (Math.random() * 500);
+						rb.mouseMove(x1, y1);
 						rb.mousePress(InputEvent.BUTTON1_MASK);
-						rb.mouseMove(x2,y2);
+						rb.mouseMove(x2, y2);
 						rb.mouseRelease(InputEvent.BUTTON1_MASK);
 					}
 					Util.pl("over");
