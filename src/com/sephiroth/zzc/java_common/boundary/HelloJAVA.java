@@ -52,7 +52,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20160722113357();
+		function20160815114540();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -100,7 +100,6 @@ public class HelloJAVA {
 		}
 	} 
 	
-<<<<<<< HEAD
 	static class CthunReport{
 		int statusCount;
 		double statusRate;
@@ -112,7 +111,9 @@ public class HelloJAVA {
 		
 		public String toString(){
 			return ""+this.statusCount+"\t\t"+Util.DECIMAL_FORMAT_PERCENT.format(statusRate*100)+"%";
-=======
+		}
+	}
+	
 	public static void function20160815114540(String... args) {
 		MatchManager m = new MatchManager();
 		for(int i=0;i<100;i++){
@@ -121,7 +122,6 @@ public class HelloJAVA {
 			Util.pl(Util.JAVA_COMMON_LOG_PATH);
 //			File log = new File(Util.JAVA_COMMON_LOG_PATH);
 			FileManager.writeLine(Util.JAVA_COMMON_LOG_PATH, match.toCsv());
->>>>>>> temp_20160815112404
 		}
 	}
 	
