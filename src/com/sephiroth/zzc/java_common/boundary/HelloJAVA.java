@@ -20,11 +20,13 @@ import com.sephiroth.zzc.java_common.control.TimeManager;
 import com.sephiroth.zzc.java_common.control.XMLUtil;
 import com.sephiroth.zzc.java_common.control.ZProperties;
 import com.sephiroth.zzc.java_common.control.Zipper;
+import com.sephiroth.zzc.java_common.entity.Match;
 import com.sephiroth.zzc.java_common.service.CsvManager;
 import com.sephiroth.zzc.java_common.service.FTP;
 import com.sephiroth.zzc.java_common.service.FileCreater;
 import com.sephiroth.zzc.java_common.service.LinkExporter;
 import com.sephiroth.zzc.java_common.service.MMManager;
+import com.sephiroth.zzc.java_common.service.MatchManager;
 import com.sephiroth.zzc.java_common.service.SystemInfoManager;
 import com.sephiroth.zzc.java_common.util.Util;
 
@@ -47,7 +49,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20160722113357();
+		function20160815114540();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -86,6 +88,17 @@ public class HelloJAVA {
 			this.minons = minons;
 		}
 	} 
+	
+	public static void function20160815114540(String... args) {
+		MatchManager m = new MatchManager();
+		for(int i=0;i<100;i++){
+			Match match = m.genMatch();
+			Util.pl(m.genMatchResult(match).toString());
+			Util.pl(Util.JAVA_COMMON_LOG_PATH);
+//			File log = new File(Util.JAVA_COMMON_LOG_PATH);
+			FileManager.writeLine(Util.JAVA_COMMON_LOG_PATH, match.toCsv());
+		}
+	}
 	
 	public static void function20160722113357(String... args) {
 		//敌方随从
