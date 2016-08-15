@@ -11,6 +11,9 @@ import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -85,15 +88,38 @@ public class HelloJAVA {
 			this.playerHealth = playerHealth;
 			this.minons = minons;
 		}
+		
+		public String toString(){
+			String ret = ""+this.playerHealth;
+			for(Integer i:this.minons){
+				ret+=" "+i;
+			}
+			return ret;
+		}
 	} 
+	
+	static class CthunReport{
+		int statusCount;
+		double statusRate;
+		public CthunReport(int statusCount, double statusRate) {
+			super();
+			this.statusCount = statusCount;
+			this.statusRate = statusRate;
+		}
+		
+		public String toString(){
+			return ""+this.statusCount+"\t\t"+Util.DECIMAL_FORMAT_PERCENT.format(statusRate*100)+"%";
+		}
+	}
 	
 	public static void function20160722113357(String... args) {
 		//敌方随从
 		ArrayList<Integer> minons = new ArrayList<Integer>();
 		//假设是吉祥三宝
 		minons.add(2);
+//		minons.add(2);
 		minons.add(4);
-//		minons.add(4);
+		minons.add(4);
 		
 		//敌方角色血量
 		int player_health = 30;
@@ -107,6 +133,7 @@ public class HelloJAVA {
 //		}
 		
 		//克苏恩的攻击力（攻击次数）
+//		int cthun_attack = 3;
 		int cthun_attack = 12;
 		
 //		for(int i=0;i<cthun_attack;i++){
@@ -116,7 +143,20 @@ public class HelloJAVA {
 		baseBattle = new BattleField(player_health,minons);
 		curBattle = new BattleField(player_health,minons);
 		
-		attack(curBattle,cthun_attack);
+		BattleField bf = new BattleField(player_health,minons);
+		
+		attack(bf,"",1.0,cthun_attack);
+		
+		Util.pl(counter);
+		
+		Iterator iter = retMap.entrySet().iterator();
+		
+		while(iter.hasNext()){
+			Map.Entry entry = (Map.Entry)iter.next();
+			
+//			Util.pl("["+entry.getKey()+"]:"+"\t"+Util.DECIMAL_FORMAT_PERCENT.format((double)(Integer)entry.getValue()/counter*100)+"%\t"+entry.getValue());
+			Util.pl("["+entry.getKey()+"]:"+((CthunReport)entry.getValue()).toString());
+		}
 		
 //		Util.pla(ret);
 //		PrintBattle(retBf);
@@ -128,43 +168,76 @@ public class HelloJAVA {
 
 	static BattleField baseBattle;
 	static BattleField curBattle;
+	static int counter=0;
 	static ArrayList<String> ret= new ArrayList<String>();
 	static ArrayList<BattleField> retBf= new ArrayList<BattleField>();
 	static String root = "";
+	static HashMap<String,CthunReport> retMap = new HashMap<String,CthunReport>();
 	
-	public static void attack(BattleField bf,int max_attack){
-		PrintBattle(curBattle);
-		BattleField tmp_battle;
-		if(root.length()<max_attack){
+	public static void attack(BattleField bf,String rt,double rate,int max_attack){
+//		PrintBattle(bf);
+//		BattleField bs_battle = new BattleField(bf.playerHealth,bf.minons);
+		ArrayList<Integer> nx_minons = new ArrayList<Integer>();
+//		nx_minons = (ArrayList<Integer>) bf.minons.clone();
+		BattleField nx_battle = new BattleField(bf.playerHealth,(ArrayList<Integer>) bf.minons.clone());
+		String nx_rt = new String("");
+		double nx_rate = rate;
+		
+		int minons_alive_count = 0;
+		for(int i=0;i<bf.minons.size();i++){
+			if(bf.minons.get(i)>0){
+				minons_alive_count++;
+			}
+		}
+		
+		double base_rate = 1.0/(minons_alive_count+1);
+		
+		if(rt.length()<max_attack){
 			//攻击角色
-			root+="0";
-			curBattle.playerHealth-=1;
+			nx_rt=rt+"0";
+			nx_battle.playerHealth-=1;
+			nx_rate *= base_rate;
 			
-			tmp_battle = new BattleField(curBattle.playerHealth,curBattle.minons); 
-			attack(curBattle,max_attack);
-			curBattle = new BattleField(tmp_battle.playerHealth,tmp_battle.minons);
+			attack(nx_battle,nx_rt,nx_rate,max_attack);
 			
-			for(int i=0;i<curBattle.minons.size();i++){
-				int minon_health = curBattle.minons.get(i);
+			//攻击随从
+			for(int i=0;i<bf.minons.size();i++){
+				int minon_health = bf.minons.get(i);
 				if(minon_health>0){
-					root=root+(i+1);
-					curBattle.minons.set(i,minon_health-1);
+					nx_battle = new BattleField(bf.playerHealth,(ArrayList<Integer>) bf.minons.clone());
+					nx_rt = new String("");
+					nx_rate = rate;
+					
+					nx_rt=rt+(i+1);
+					nx_battle.minons.set(i,minon_health-1);
+					nx_rate *= base_rate;
 
-					tmp_battle = new BattleField(curBattle.playerHealth,curBattle.minons); 
-					attack(curBattle,max_attack);
-					curBattle = new BattleField(tmp_battle.playerHealth,tmp_battle.minons);
+					attack(nx_battle,nx_rt,nx_rate,max_attack);
 				}
 			}
 		}else{
-			ret.add(root);
-			retBf.add(curBattle);
+			ret.add(rt);
+			retBf.add(bf);
 			
-			Util.pl(root);
-			PrintBattle(curBattle);
+			counter++;
 			
-			root = "";
-//			tmp_battle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
-			curBattle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
+			String bf_status = bf.toString();
+			if(retMap.containsKey(bf_status)){
+//				CthunReport cr = retMap.get(bf_status);
+				retMap.get(bf_status).statusCount+=1;
+				retMap.get(bf_status).statusRate+=rate;
+			}else{
+				retMap.put(bf_status, new CthunReport(1,rate));
+			}
+			
+			Util.pl(rt);
+			PrintBattle(bf);
+			
+//			root = "";
+////			tmp_battle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
+//			curBattle = new BattleField(baseBattle.playerHealth,baseBattle.minons);
+			
+			return;
 		}
 	}
 	

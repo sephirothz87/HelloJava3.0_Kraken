@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,9 @@ public class Util {
 			"yyyy-MM-dd HH:mm:ss");
 	public final static SimpleDateFormat DATE_FORMAT_FOR_FILE = new SimpleDateFormat(
 			"yyyy-MM-dd-HH-mm-ss");
+	public final static DecimalFormat DECIMAL_FORMAT_DEFAULT = new DecimalFormat("###0.00"); 
+	public final static DecimalFormat DECIMAL_FORMAT_PERCENT = new DecimalFormat("##00.00"); 
+	public final static DecimalFormat DECIMAL_FORMAT_INTEGER_5 = new DecimalFormat("00000"); 
 
 	// 跨平台解决方案
 	public final static String USER_HOME = System.getProperty("user.home");
