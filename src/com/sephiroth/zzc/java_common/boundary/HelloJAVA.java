@@ -49,7 +49,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20160815114540();
+		function20171115160507();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -74,7 +74,94 @@ public class HelloJAVA {
 
 	// 测试命令行接口
 	public static void function(String... args) {
+	} 
+	
+	//2017年11月15日	单体测试
+	public static void function20171115160507(String... args) {
+		
 	}
+	//2017年11月15日	单体测试
+	
+	
+	
+	//2017-10-30-205754
+	public static void function20171030205810(String... args) {
+		String str = parseErrorCode("id:47885e41-e8b9-4012-8514-83b3ba182742 sub:001 dlvrd:001 submit date:1705260157 done date:1705260157 stat:DELIVRD err:0 text:");
+		Util.pl(str);
+	}
+	//id:47885e41-e8b9-4012-8514-83b3ba182742 sub:001 dlvrd:001 submit date:1705260157 done date:1705260157 stat:DELIVRD err:0 text:
+	public static String parseErrorCode(String detail){
+//		if (StringUtils.isBlank(detail)){
+//			return "";
+//		}
+		
+		String error_code = "";
+		String detailGroups[] = detail.split(" ");
+		if (detailGroups != null && detailGroups.length > 0){
+			for (String detailGrep : detailGroups){
+//				if (!StringUtils.isEmpty(detailGrep)){
+					String details[] = detailGrep.split(":");
+					if (details != null && details.length == 2){
+						if ("err".equals(details[0])){
+							error_code = details[1];
+						}
+					}
+//				}
+			}
+		}
+		return error_code;
+	}
+	//2017-10-30-205754
+	
+	//2017-10-18-160708 鼠标点击
+	public static void function20171018160719(String... args) {
+		try {
+			final Robot rb = new Robot();
+			new Thread() {
+				public void run() {
+					Util.pl("run");
+						rb.delay(10000);
+						
+						//确定
+						rb.delay(1000);
+						rb.mouseMove(1145,395);
+						rb.delay(100);
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+						rb.delay(100);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+						
+						//点开teamviewer
+						rb.delay(1000);
+						rb.mouseMove(790,1045);
+						rb.delay(100);
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+						rb.delay(100);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+						
+						//点开菜单
+						rb.delay(1000);
+						rb.mouseMove(840,280);
+						rb.delay(100);
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+						rb.delay(100);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+						
+						//唤醒
+						rb.delay(1000);
+						rb.mouseMove(740,545);
+						rb.delay(100);
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+						rb.delay(100);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+					Util.pl("over");
+				}
+			}.start();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//2017-10-18-160708 鼠标点击
 	
 	// 克苏恩杀怪测试
 	static class BattleField{
