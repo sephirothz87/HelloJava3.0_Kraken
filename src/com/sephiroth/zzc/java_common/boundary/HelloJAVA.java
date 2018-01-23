@@ -52,7 +52,7 @@ public class HelloJAVA {
 		Util.pl("function start");
 
 		// 临时测试入口
-		function20160815114540();
+		function20161029151455();
 
 		// 输出可执行jar包使使用
 		// function(args);
@@ -77,6 +77,42 @@ public class HelloJAVA {
 
 	// 测试命令行接口
 	public static void function(String... args) {
+	}
+	
+	// 鼠标拖拽测试
+	public static void function20161029151455(String... args) {
+		try {
+			final Robot rb = new Robot();
+			new Thread() {
+				public void run() {
+					Util.pl("run");
+					for (int i = 0; i < 10; i++) {
+						rb.delay(2000);
+						// 回车
+						// rb.keyPress(KeyEvent.VK_ENTER);
+						// rb.keyRelease(KeyEvent.VK_ENTER);
+
+//						int x1 = (int) (Math.random() * 500);
+//						int y1 = (int) (Math.random() * 500);
+//						int x2 = (int) (Math.random() * 500);
+//						int y2 = (int) (Math.random() * 500);
+						if(i%2==0){
+							rb.mouseMove(240, 270);
+						}else{
+							rb.mouseMove(720, 270);
+						}
+						rb.mousePress(InputEvent.BUTTON1_MASK);
+//						rb.mouseMove(x2, y2);
+						rb.delay(1000);
+						rb.mouseRelease(InputEvent.BUTTON1_MASK);
+					}
+					Util.pl("over");
+				}
+			}.start();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// 克苏恩杀怪测试
